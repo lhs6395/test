@@ -117,12 +117,13 @@ Resources:
       Source:
         Type: CODEPIPELINE
         BuildSpec: |
-          version: 0.2
+          version: 0.3
           phases:
             pre_build:
               commands:
+			    - if [ -z "${TAG}"]; then TAG=latest; fi
                 - $(aws ecr get-login --no-include-email)
-                - TAG="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
+                - if [ -n "$CODEBUILD_RESOLVED_SOURCE_VERSION" ]; then TAG="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"; fi
                 - IMAGE_URI="${REPOSITORY_URI}:${TAG}"
             build:
               commands:
