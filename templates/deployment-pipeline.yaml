@@ -122,7 +122,8 @@ Resources:
             pre_build:
               commands:
                 - $(aws ecr get-login --no-include-email)
-                - if [ -n "$CODEBUILD_RESOLVED_SOURCE_VERSION" ]; then TAG="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"; fi
+#                - TAG="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
+                - TAG = latest;
 #                - IMAGE_URI="${REPOSITORY_URI}:${TAG}"
 		        		- IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:${TAG}"
             build:
